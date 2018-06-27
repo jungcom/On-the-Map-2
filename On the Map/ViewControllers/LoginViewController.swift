@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import WebKit
 
 class LoginViewController: UIViewController {
     
     var appDelegate: AppDelegate!
     var keyboardOnScreen = false
+    var webView: WKWebView!
     
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var userEmailTextField: UITextField!
@@ -44,9 +46,17 @@ class LoginViewController: UIViewController {
             authenticateUser(userEmail: userEmail, userPassword: userPassword)
         }
     }
+    @IBAction func signUpPressed(){
+        let controller = storyboard!.instantiateViewController(withIdentifier: "WebViewController") as! UIViewController
+        present(controller, animated: true, completion: nil)
+    }
+    
+    @objc func cancelSignUp() {
+        dismiss(animated: true, completion: nil)
+    }
     
     func authenticateUser(userEmail: String, userPassword: String){
-        var request = URLRequest(url: URL(string: Constants.UdacityMethod.authenticateMethod)!)
+        var request = URLRequest(url: URL(string: UdacityConstants.UdacityMethod.authenticateMethod)!)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -75,7 +85,6 @@ class LoginViewController: UIViewController {
             }
             let range = Range(5..<data.count)
             let newData = data.subdata(in: range) /* subset response data! */
-            print(String(data: newData, encoding: .utf8)!)
             
             /* 5. Parse the data*/
             let parsedResult: [String:AnyObject]!
@@ -86,18 +95,18 @@ class LoginViewController: UIViewController {
                 return
             }
             
-            if let _ = parsedResult[Constants.UdacityResponseKeys.StatusCode] as? Int {
-                sendError(Constants.UdacityErrors.noUsernameOrPassword)
+            if let _ = parsedResult[UdacityConstants.UdacityResponseKeys.StatusCode] as? Int {
+                sendError(UdacityConstants.UdacityErrors.noUsernameOrPassword)
                 return
             }
             
-            guard let _ = parsedResult[Constants.UdacityResponseKeys.Account] as? [String: AnyObject], let session = parsedResult[Constants.UdacityResponseKeys.Session] as? [String: AnyObject] else {
-                sendError(Constants.UdacityErrors.noUsernameOrPassword)
+            guard let _ = parsedResult[UdacityConstants.UdacityResponseKeys.Account] as? [String: AnyObject], let session = parsedResult[UdacityConstants.UdacityResponseKeys.Session] as? [String: AnyObject] else {
+                sendError(UdacityConstants.UdacityErrors.noUsernameOrPassword)
                 return
             }
             
-            guard let sessionID = session[Constants.UdacityResponseKeys.SessionID] as? String else {
-                sendError(Constants.UdacityErrors.noUsernameOrPassword)
+            guard let sessionID = session[UdacityConstants.UdacityResponseKeys.SessionID] as? String else {
+                sendError(UdacityConstants.UdacityErrors.noUsernameOrPassword)
                 return
             }
             
@@ -112,8 +121,8 @@ class LoginViewController: UIViewController {
     func completeLogin() {
         performUIUpdatesOnMain {
             self.setUIEnabled(true)
-            /*let controller = self.storyboard!.instantiateViewController(withIdentifier: "MoviesTabBarController") as! UITabBarController
-            self.present(controller, animated: true, completion: nil)*/
+            let controller = self.storyboard!.instantiateViewController(withIdentifier: "LocationTabBarController") as! UITabBarController
+            self.present(controller, animated: true, completion: nil)
         }
     }
 }

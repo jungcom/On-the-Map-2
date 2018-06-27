@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - Constants
 
-struct Constants {
+struct UdacityConstants {
     
     // MARK: Udacity
     struct UdacityMethod {
