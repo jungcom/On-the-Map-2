@@ -19,6 +19,7 @@
 		4E3C071320E2D121006A5376 /* UserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3C071220E2D121006A5376 /* UserTableViewController.swift */; };
 		4E3C071520E2D3E7006A5376 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3C071420E2D3E7006A5376 /* MapViewController.swift */; };
 		4E40A50520E40670001E586D /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E40A50420E40670001E586D /* StudentInformation.swift */; };
+		4E7BE38120E47B5600F5E2C9 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7BE38020E47B5600F5E2C9 /* ParseClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		4E3C071220E2D121006A5376 /* UserTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewController.swift; sourceTree = "<group>"; };
 		4E3C071420E2D3E7006A5376 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		4E40A50420E40670001E586D /* StudentInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
+		4E7BE38020E47B5600F5E2C9 /* ParseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 			children = (
 				4E3166E420E1637A007F2E85 /* ParseConstants.swift */,
 				4E40A50420E40670001E586D /* StudentInformation.swift */,
+				4E7BE38020E47B5600F5E2C9 /* ParseClient.swift */,
 			);
 			path = Parse;
 			sourceTree = "<group>";
@@ -194,6 +197,7 @@
 				4E3166E220E15BAA007F2E85 /* UdacityConstants.swift in Sources */,
 				4E3C071320E2D121006A5376 /* UserTableViewController.swift in Sources */,
 				4E3166E520E1637A007F2E85 /* ParseConstants.swift in Sources */,
+				4E7BE38120E47B5600F5E2C9 /* ParseClient.swift in Sources */,
 				4E40A50520E40670001E586D /* StudentInformation.swift in Sources */,
 				4E3166E720E1687C007F2E85 /* GCDBlackBox.swift in Sources */,
 				4E3C071520E2D3E7006A5376 /* MapViewController.swift in Sources */,

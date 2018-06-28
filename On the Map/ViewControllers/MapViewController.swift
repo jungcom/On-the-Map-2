@@ -13,8 +13,6 @@ class MapViewController: UIViewController, MKMapViewDelegate{
 
     @IBOutlet weak var mapView: MKMapView!
     
-    var studentLocations: [StudentInformation] = [StudentInformation]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -63,25 +61,17 @@ class MapViewController: UIViewController, MKMapViewDelegate{
             }
             
             //handle data
-            self.assignJSONtoStudentInfo(results)
-            print(self.studentLocations)
-            self.placePins()
+            let studentLocations = StudentInformation.studentLocationsFromResults(results)
+            print(studentLocations)
+            self.placePins(studentLocations)
         }
         task.resume()
     }
     
-    //assign the downloaded data to studentLocations variable
-    func assignJSONtoStudentInfo(_ result: [[String: AnyObject]]){
-        
-        for student in result{
-            self.studentLocations.append(StudentInformation(dictionary: student)!)
-        }
-    }
-    
     //Place Pins
-    func placePins(){
+    func placePins(_ studentLocations: [StudentInformation]){
         var annotations = [MKPointAnnotation]()
-        for studentInfo in self.studentLocations {
+        for studentInfo in studentLocations {
             
             // Notice that the float values are being used to create CLLocationDegree values.
             // This is a version of the Double type.

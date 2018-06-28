@@ -11,7 +11,7 @@ import WebKit
 
 class LoginViewController: UIViewController {
     
-    var appDelegate: AppDelegate!
+    var parseClient: ParseClient!
     var keyboardOnScreen = false
     var webView: WKWebView!
     
@@ -24,7 +24,6 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        appDelegate = UIApplication.shared.delegate as! AppDelegate
         // Do any additional setup after loading the view, typically from a nib.
         userEmailTextField.delegate = self
         userPasswordTextField.delegate = self
@@ -111,7 +110,8 @@ class LoginViewController: UIViewController {
             }
             
             print(sessionID)
-            self.appDelegate.sessionID = sessionID
+            // MARK: TODO Change for Client
+            // self.appDelegate.sessionID = sessionID
             self.completeLogin()
         }
         task.resume()

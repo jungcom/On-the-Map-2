@@ -33,7 +33,18 @@ struct StudentInformation {
         self.longitude = dictionary[ParseConstants.ParseResponseKeys.longitude] as? Double ?? 0.0
         self.createdAt = dictionary[ParseConstants.ParseResponseKeys.createdAt] as? String ?? ""
         self.updatedAt = dictionary[ParseConstants.ParseResponseKeys.updatedAt] as? String ?? ""
+    }
+    
+    static func studentLocationsFromResults(_ results: [[String:AnyObject]]) -> [StudentInformation] {
         
+        var studentLocations = [StudentInformation]()
+        
+        // iterate through array of dictionaries, each Movie is a dictionary
+        for result in results {
+            studentLocations.append(StudentInformation(dictionary: result)!)
+        }
+        
+        return studentLocations
     }
     
 }
