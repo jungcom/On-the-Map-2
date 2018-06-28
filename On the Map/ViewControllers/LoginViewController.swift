@@ -45,8 +45,9 @@ class LoginViewController: UIViewController {
             authenticateUser(userEmail: userEmail, userPassword: userPassword)
         }
     }
+    
     @IBAction func signUpPressed(){
-        let controller = storyboard!.instantiateViewController(withIdentifier: "WebViewController") as! UIViewController
+        let controller = storyboard!.instantiateViewController(withIdentifier: "WebViewController") 
         present(controller, animated: true, completion: nil)
     }
     

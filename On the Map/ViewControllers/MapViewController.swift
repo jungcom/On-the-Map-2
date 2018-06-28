@@ -68,7 +68,8 @@ class MapViewController: UIViewController, MKMapViewDelegate{
             
             //handle data
             let studentLocations = StudentInformation.studentLocationsFromResults(results)
-            print(studentLocations)
+            // save studentLoactions as a global variable
+            self.client.sharedStudentLocations = studentLocations
             self.placePins(studentLocations)
         }
         task.resume()
@@ -96,7 +97,6 @@ class MapViewController: UIViewController, MKMapViewDelegate{
             annotation.coordinate = coordinate
             annotation.title = "\(first) \(last)"
             annotation.subtitle = mediaURL
-            print("\(coordinate) : \(first) \(last)")
             
             // Finally we place the annotation in an array of annotations.
             annotations.append(annotation)
