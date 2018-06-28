@@ -23,6 +23,27 @@ class ParseClient :NSObject{
         super.init()
     }
     
+    // create a URL from parameters
+    func parseURLFromParameters(_ parameters: [String:AnyObject], withPathExtension: String? = nil) -> URL {
+        
+        var components = URLComponents()
+        components.scheme = ParseConstants.URLs.apiScheme
+        components.host = ParseConstants.URLs.apiHost
+        components.path = ParseConstants.URLs.apiPath + (withPathExtension ?? "")
+        components.queryItems = [URLQueryItem]()
+        
+        for (key, value) in parameters {
+            let queryItem = URLQueryItem(name: key, value: "\(value)")
+            components.queryItems!.append(queryItem)
+        }
+        
+        guard let _ = components.url else {
+            fatalError("Failed to create URL")
+        }
+        
+        return components.url!
+    }
+    
     // MARK: Shared Instance
     
     class func sharedInstance() -> ParseClient {

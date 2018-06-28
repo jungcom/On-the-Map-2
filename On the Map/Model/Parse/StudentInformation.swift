@@ -35,6 +35,7 @@ struct StudentInformation {
         self.updatedAt = dictionary[ParseConstants.ParseResponseKeys.updatedAt] as? String ?? ""
     }
     
+    
     static func studentLocationsFromResults(_ results: [[String:AnyObject]]) -> [StudentInformation] {
         
         var studentLocations = [StudentInformation]()

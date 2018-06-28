@@ -10,6 +10,13 @@ import Foundation
 
 struct ParseConstants{
     
+    //URLs
+    struct URLs{
+        static let apiScheme = "https"
+        static let apiHost = "parse.udacity.com"
+        static let apiPath = "/parse/classes/StudentLocation"
+    }
+    
     //Response Keys
     struct ParseResponseKeys{
         static let objectID = "objectId"
@@ -27,7 +34,7 @@ struct ParseConstants{
     
     //Parse Methods
     struct ParseMethods{
-        static let getStudentLocationMethod = "https://parse.udacity.com/parse/classes/StudentLocation?limit=10"
+        static let getStudentLocationMethod = "https://parse.udacity.com/parse/classes/StudentLocation?"
     }
     
     //Parse Parameter Keys

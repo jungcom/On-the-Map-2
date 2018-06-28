@@ -13,6 +13,8 @@ class MapViewController: UIViewController, MKMapViewDelegate{
 
     @IBOutlet weak var mapView: MKMapView!
     
+    let client = ParseClient.sharedInstance()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,7 +26,11 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     }
     
     func downloadStudentLocation(){
-        var request = URLRequest(url: URL(string: ParseConstants.ParseMethods.getStudentLocationMethod)!)
+        
+        //create parameters
+        
+        let parameter = [ParseConstants.ParseParameterKeys.limit: 100] as [String:AnyObject]
+        var request = URLRequest(url: client.parseURLFromParameters(parameter))
         request.addValue(ParseConstants.ParseParameterKeys.parseAppID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(ParseConstants.ParseParameterKeys.restAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         let session = URLSession.shared

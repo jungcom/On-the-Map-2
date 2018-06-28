@@ -103,8 +103,8 @@
 			isa = PBXGroup;
 			children = (
 				4E3166E420E1637A007F2E85 /* ParseConstants.swift */,
-				4E40A50420E40670001E586D /* StudentInformation.swift */,
 				4E7BE38020E47B5600F5E2C9 /* ParseClient.swift */,
+				4E40A50420E40670001E586D /* StudentInformation.swift */,
 			);
 			path = Parse;
 			sourceTree = "<group>";
