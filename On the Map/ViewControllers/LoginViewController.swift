@@ -33,6 +33,14 @@ class LoginViewController: UIViewController {
         subscribeToNotification(.UIKeyboardDidShow, selector: #selector(keyboardDidShow))
         subscribeToNotification(.UIKeyboardDidHide, selector: #selector(keyboardDidHide))
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //set textfields empty
+        userEmailTextField.text = ""
+        userPasswordTextField.text = ""
+    }
 
     @IBAction func loginPressed(){
         if userEmailTextField.text!.isEmpty || userPasswordTextField.text!.isEmpty {

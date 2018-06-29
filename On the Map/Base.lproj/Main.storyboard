@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5wn-NI-6SR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -187,7 +188,7 @@
             </objects>
             <point key="canvasLocation" x="927" y="122"/>
         </scene>
-        <!--Root View Controller-->
+        <!--On The Map-->
         <scene sceneID="GKG-4b-7el">
             <objects>
                 <tableViewController storyboardIdentifier="UserTableViewController" id="zHq-Le-2xi" customClass="UserTableViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
@@ -226,7 +227,17 @@
                             <outlet property="delegate" destination="zHq-Le-2xi" id="OMK-gW-TnR"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="o3d-vC-bl6"/>
+                    <toolbarItems>
+                        <barButtonItem systemItem="add" id="9c4-Ib-yJt"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="On The Map" id="o3d-vC-bl6">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="fng-2K-R2C"/>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="9dG-tm-yq5"/>
+                            <barButtonItem systemItem="refresh" id="5jg-Vq-vH2"/>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jh6-Z7-P1G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -290,9 +301,22 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="kKv-8B-eIF"/>
                     </view>
-                    <navigationItem key="navigationItem" id="VMq-m6-pFL"/>
+                    <navigationItem key="navigationItem" id="VMq-m6-pFL">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="Q3z-Tx-rxh">
+                            <connections>
+                                <action selector="logoutWithSender:" destination="1d9-oh-78K" id="dpT-vX-jpD"/>
+                            </connections>
+                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="acW-NC-ZbR"/>
+                            <barButtonItem systemItem="refresh" id="dWO-wo-rXT"/>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
+                        <outlet property="addButton" destination="acW-NC-ZbR" id="TDE-gk-tgU"/>
+                        <outlet property="logoutButton" destination="Q3z-Tx-rxh" id="zga-uB-9Xp"/>
                         <outlet property="mapView" destination="C2O-c5-SCF" id="ESQ-a3-4Am"/>
+                        <outlet property="refreshButton" destination="dWO-wo-rXT" id="VZr-UQ-Fpx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="87q-Ap-3ix" userLabel="First Responder" sceneMemberID="firstResponder"/>

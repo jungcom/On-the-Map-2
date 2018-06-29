@@ -13,6 +13,10 @@ class MapViewController: UIViewController, MKMapViewDelegate{
 
     @IBOutlet weak var mapView: MKMapView!
     
+    @IBOutlet weak var logoutButton: UIBarButtonItem!
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
+    @IBOutlet weak var addButton: UIBarButtonItem!
+    
     let client = ParseClient.sharedInstance()
     
     override func viewDidLoad() {
@@ -23,6 +27,18 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         
         // Download Student locations
         downloadStudentLocation()
+    }
+    
+    @IBAction func logout(sender: AnyObject){
+        UdacityClient.sharedInstance().logout{ (success) in
+            if success {
+                performUIUpdatesOnMain {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            } else {
+                print("logout failed")
+            }
+        }
     }
     
     func downloadStudentLocation(){
