@@ -30,6 +30,9 @@ class WebViewController: UIViewController, WKNavigationDelegate{
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelSignUp))
         webView = WKWebView()
         webView.navigationDelegate = self
+        
+        // must be changed
+        view = webView
     }
 
     @objc func cancelSignUp() {

@@ -12,7 +12,9 @@ class UserTableViewController: UITableViewController {
 
     var studentLocations : [StudentInformation]?
     
-    
+    @IBOutlet weak var logoutButton: UIBarButtonItem!
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
+    @IBOutlet weak var addButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +29,19 @@ class UserTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
+    }
+    
+    //Logout
+    @IBAction func logout(sender: AnyObject){
+        UdacityClient.sharedInstance().logout{ (success) in
+            if success {
+                performUIUpdatesOnMain {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            } else {
+                print("logout failed")
+            }
+        }
     }
     
     // MARK: - Table view data source
