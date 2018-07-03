@@ -22,7 +22,7 @@ struct UdacityConstants {
     struct UdacityResponseKeys {
         static let Account = "account"
         static let Registered = "registered"
-        static let Key = "Key"
+        static let Key = "key"
         static let Session = "session"
         static let SessionID = "id"
         static let Expiration = "expiration"

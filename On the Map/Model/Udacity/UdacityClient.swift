@@ -10,7 +10,7 @@ import Foundation
 
 class UdacityClient :NSObject{
     // MARK: Properties
-    
+    var uniqueKey: String!
     // shared session
     var session = URLSession.shared
     

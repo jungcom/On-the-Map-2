@@ -108,19 +108,21 @@ class LoginViewController: UIViewController {
                 return
             }
             
-            guard let _ = parsedResult[UdacityConstants.UdacityResponseKeys.Account] as? [String: AnyObject], let session = parsedResult[UdacityConstants.UdacityResponseKeys.Session] as? [String: AnyObject] else {
+            guard let account = parsedResult[UdacityConstants.UdacityResponseKeys.Account] as? [String: AnyObject], let session = parsedResult[UdacityConstants.UdacityResponseKeys.Session] as? [String: AnyObject] else {
                 sendError(UdacityConstants.UdacityErrors.noUsernameOrPassword)
                 return
             }
             
-            guard let sessionID = session[UdacityConstants.UdacityResponseKeys.SessionID] as? String else {
+            guard let sessionID = session[UdacityConstants.UdacityResponseKeys.SessionID] as? String, let uniqueKey = account[UdacityConstants.UdacityResponseKeys.Key] as? String else {
                 sendError(UdacityConstants.UdacityErrors.noUsernameOrPassword)
                 return
             }
             
-            print(sessionID)
+            print("SessionID: " + sessionID)
+            print ("Unique Key : " + uniqueKey)
             // MARK: TODO Change for Client
             // self.appDelegate.sessionID = sessionID
+            UdacityClient.sharedInstance().uniqueKey = uniqueKey
             self.completeLogin()
         }
         task.resume()

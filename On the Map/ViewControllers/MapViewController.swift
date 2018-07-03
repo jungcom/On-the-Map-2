@@ -17,16 +17,22 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
     
-    let client = ParseClient.sharedInstance()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.navigationItem.title = "On The Map"
         
-        // Download Student locations
-        downloadStudentLocation()
+        // Download 100 Student locations
+        
+        var parameter = [ParseConstants.ParseParameterKeys.limit: 100] as [String:AnyObject]
+        downloadStudentLocation(parameter: parameter)
+        
+        //MARK: TO DO - downloading the users location gives an error (When commenting the top code that downloads 100 Student locations)
+        let uniqueKey = UdacityClient.sharedInstance().uniqueKey
+        print(uniqueKey!)
+        parameter = [ParseConstants.ParseParameterKeys.wherePar: "{\"uniqueKey\":\"\(uniqueKey!)\"}"] as [String:AnyObject]
+        downloadStudentLocation(parameter: parameter)
     }
     
     @IBAction func logout(sender: AnyObject){
@@ -41,54 +47,33 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         }
     }
     
-    func downloadStudentLocation(){
+    func downloadStudentLocation(parameter: [String:AnyObject], withPathExtension:String? = nil){
         
-        //create parameters
+        //create parameters and URL
         
-        let parameter = [ParseConstants.ParseParameterKeys.limit: 100] as [String:AnyObject]
-        var request = URLRequest(url: client.parseURLFromParameters(parameter))
-        request.addValue(ParseConstants.ParseParameterKeys.parseAppID, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue(ParseConstants.ParseParameterKeys.restAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
-        let session = URLSession.shared
-        let task = session.dataTask(with: request) { data, response, error in
-            //Print error method
-            func sendError(_ error: String) {
-                print(error)
-            }
-            
-            /* GUARD: Was there an error? */
-            guard (error == nil) else {
-                sendError("There was an error with your request: \(error!)")
-                return
-            }
-            
-            /* GUARD: Was there any data returned? */
-            guard let data = data else {
-                sendError("No data was returned by the request!")
-                return
-            }
-            
-            /* 5. Parse the data*/
-            let parsedResult: [String:AnyObject]!
-            do {
-                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:AnyObject]
-            } catch {
-                print("Could not parse the data as JSON: '\(data)'")
-                return
-            }
-            
-            guard let results = parsedResult[ParseConstants.ParseResponseKeys.results] as? [[String: AnyObject]] else {
-                sendError("cannot parse")
-                return
-            }
-            
-            //handle data
-            let studentLocations = StudentInformation.studentLocationsFromResults(results)
-            // save studentLoactions as a global variable
-            self.client.sharedStudentLocations = studentLocations
-            self.placePins(studentLocations)
+        let parseClient = ParseClient.sharedInstance()
+        let parseURL: URL
+        if let withPathExtension = withPathExtension {
+            parseURL = parseClient.parseURLFromParameters(parameter, withPathExtension: withPathExtension)
+        } else {
+            parseURL = parseClient.parseURLFromParameters(parameter)
         }
-        task.resume()
+        
+        // Create request
+        parseClient.downloadStudentLocations(url: parseURL, parameters: parameter, completionHandlerForDownload: {(results, success) in
+            if success {
+                // handle data
+                let studentLocations = StudentInformation.studentLocationsFromResults(results!)
+                
+                // save studentLoactions as a global variable
+                parseClient.sharedStudentLocations = studentLocations
+                
+                // Place pins on map
+                self.placePins(studentLocations)
+            } else {
+                print("Download Failed")
+            }
+        })
     }
     
     //Place Pins

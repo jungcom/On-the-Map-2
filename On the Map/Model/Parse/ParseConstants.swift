@@ -44,5 +44,6 @@ struct ParseConstants{
         static let limit = "limit"
         static let skip = "skip"
         static let order = "order"
+        static let wherePar = "where"
     }
 }
