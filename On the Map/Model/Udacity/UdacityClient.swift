@@ -31,8 +31,6 @@ class UdacityClient :NSObject{
             if error != nil { // Handle error…
                 return
             }
-            let range = Range(5..<data!.count)
-            let newData = data?.subdata(in: range) /* subset response data! */
             completionHandlerForLogout(true)
         }
         task.resume()

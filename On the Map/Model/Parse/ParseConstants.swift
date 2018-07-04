@@ -46,4 +46,11 @@ struct ParseConstants{
         static let order = "order"
         static let wherePar = "where"
     }
+    
+    //Parse User Info
+    struct UserInfo{
+        static let firstName = "Anthony"
+        static let lastname = "Lee"
+        static let mediaURL = "https://google.com"
+    }
 }

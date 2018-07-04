@@ -35,6 +35,19 @@ struct StudentInformation {
         self.updatedAt = dictionary[ParseConstants.ParseResponseKeys.updatedAt] as? String ?? ""
     }
     
+    init(firstname: String, lastName: String, mapString : String, mediaURL : String, latitude : Double, longitude : Double, uniqueKey: String? = nil, objectID : String? = nil) {
+        self.firstName = firstname
+        self.lastName = lastName
+        self.mapString = mapString
+        self.latitude = latitude
+        self.longitude = longitude
+        self.uniqueKey = uniqueKey
+        self.objectId = objectID ?? ""
+        self.mediaURL = mediaURL
+        self.createdAt = ""
+        self.updatedAt = ""
+    }
+    
     static func studentLocationsFromResults(_ results: [[String:AnyObject]]) -> [StudentInformation] {
         
         var studentLocations = [StudentInformation]()

@@ -20,13 +20,7 @@ class ParseClient :NSObject{
     // shared STUDENT LOCATION data
     var sharedStudentLocations: [StudentInformation]?
     
-    // MARK: Initializers
-    
-    override init() {
-        super.init()
-    }
-    //
-    // MARK: GET
+    // Download Student Location with get method
     
     func downloadStudentLocations(url: URL, parameters: [String:AnyObject], completionHandlerForDownload: @escaping (_ results: [[String:AnyObject]]?, _ success: Bool) -> Void){
         
@@ -74,6 +68,41 @@ class ParseClient :NSObject{
         task.resume()
     }
     
+    // MARK: - Post User's Location
+    func postNewUserLocation(userLocationInfo: StudentInformation, completionHandlerForPostingLocation: @escaping (_ success: Bool) -> Void){
+        var request = URLRequest(url: URL(string: ParseConstants.ParseMethods.getStudentLocationMethod)!)
+        request.httpMethod = "POST"
+        request.addValue(ParseConstants.ParseParameterKeys.parseAppID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(ParseConstants.ParseParameterKeys.restAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = "{\"uniqueKey\": \"\(userLocationInfo.uniqueKey ?? "")\", \"firstName\": \"\(userLocationInfo.firstName)\", \"lastName\": \"\(userLocationInfo.lastName)\",\"mapString\": \"\(userLocationInfo.mapString)\", \"mediaURL\": \"\(userLocationInfo.mediaURL)\",\"latitude\": \(userLocationInfo.latitude), \"longitude\": \(userLocationInfo.longitude)}".data(using: .utf8)
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { data, response, error in
+            
+            //Print error method
+            func sendError(_ error: String) {
+                print(error)
+            }
+            
+            /* GUARD: Was there an error? */
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error!)")
+                return
+            }
+            
+            /* GUARD: Was there any data returned? */
+            guard let data = data else {
+                sendError("No data was returned by the request!")
+                return
+            }
+            
+            // MARK: - TO DO parse data and save object id
+            
+            completionHandlerForPostingLocation(true)
+        }
+        task.resume()
+    }
+    
     // given raw JSON, return a usable Foundation object
     private func convertDataWithCompletionHandler(_ data: Data, completionHandlerForConvertData: (_ result: AnyObject?, _ error: NSError?) -> Void) {
         
@@ -109,7 +138,7 @@ class ParseClient :NSObject{
         return components.url!
     }
     
-    // MARK: Shared Instance
+    // Shared Instance
     
     class func sharedInstance() -> ParseClient {
         struct Singleton {

@@ -25,16 +25,13 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         
         // Download 100 Student locations
         
-        var parameter = [ParseConstants.ParseParameterKeys.limit: 100] as [String:AnyObject]
+        let parameter = [ParseConstants.ParseParameterKeys.limit: 100] as [String:AnyObject]
         downloadStudentLocation(parameter: parameter)
         
-        //MARK: TO DO - downloading the users location gives an error (When commenting the top code that downloads 100 Student locations)
-        let uniqueKey = UdacityClient.sharedInstance().uniqueKey
-        print(uniqueKey!)
-        parameter = [ParseConstants.ParseParameterKeys.wherePar: "{\"uniqueKey\":\"\(uniqueKey!)\"}"] as [String:AnyObject]
-        downloadStudentLocation(parameter: parameter)
+        
     }
     
+    // Logout using Udacity's DELETE method
     @IBAction func logout(sender: AnyObject){
         UdacityClient.sharedInstance().logout{ (success) in
             if success {
@@ -46,6 +43,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
             }
         }
     }
+    
     
     func downloadStudentLocation(parameter: [String:AnyObject], withPathExtension:String? = nil){
         
@@ -59,7 +57,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
             parseURL = parseClient.parseURLFromParameters(parameter)
         }
         
-        // Create request
+        // Create request using parseClient
         parseClient.downloadStudentLocations(url: parseURL, parameters: parameter, completionHandlerForDownload: {(results, success) in
             if success {
                 // handle data
@@ -76,7 +74,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         })
     }
     
-    //Place Pins
+    // Place Pins on Map
     func placePins(_ studentLocations: [StudentInformation]){
         var annotations = [MKPointAnnotation]()
         for studentInfo in studentLocations {
