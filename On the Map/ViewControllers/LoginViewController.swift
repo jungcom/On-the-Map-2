@@ -63,6 +63,7 @@ class LoginViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    //MARK: TO DO - THIS MUST BE DONE IN UDACITY CLIENT
     func authenticateUser(userEmail: String, userPassword: String){
         var request = URLRequest(url: URL(string: UdacityConstants.UdacityMethod.authenticateMethod)!)
         request.httpMethod = "POST"
@@ -120,15 +121,13 @@ class LoginViewController: UIViewController {
             
             print("SessionID: " + sessionID)
             print ("Unique Key : " + uniqueKey)
-            // MARK: TODO Change for Client
-            // self.appDelegate.sessionID = sessionID
             UdacityClient.sharedInstance().uniqueKey = uniqueKey
             self.completeLogin()
         }
         task.resume()
     }
     
-    // MARK: function to complete login and open Movietab controller
+    // function to complete login and open Movietab controller
     func completeLogin() {
         performUIUpdatesOnMain {
             self.setUIEnabled(true)
@@ -138,7 +137,7 @@ class LoginViewController: UIViewController {
     }
 }
 
-//MARK: UI Updates
+// UI Updates
 private extension LoginViewController{
     func setUIEnabled(_ enabled: Bool) {
         userEmailTextField.isEnabled = enabled
@@ -156,14 +155,14 @@ private extension LoginViewController{
 
 extension LoginViewController: UITextFieldDelegate {
     
-    // MARK: UITextFieldDelegate
+    // UITextFieldDelegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    // MARK: Show/Hide Keyboard
+    // Show/Hide Keyboard
     
     @objc func keyboardWillShow(_ notification: Notification) {
         if !keyboardOnScreen {
@@ -205,7 +204,7 @@ extension LoginViewController: UITextFieldDelegate {
     }*/
 }
 
-// MARK: - LoginViewController (Notifications)
+// LoginViewController (Notifications)
 
 private extension LoginViewController {
     

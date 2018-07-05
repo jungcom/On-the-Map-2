@@ -101,8 +101,6 @@ class ParseClient :NSObject{
                 sendError("No data was returned by the request!")
                 return
             }
-            
-            // MARK: - TO DO parse data and save object id
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: { (result, error) in
                 if error == nil {
                     guard let objectId = result![ParseConstants.ParseResponseKeys.objectID] as! String? else{

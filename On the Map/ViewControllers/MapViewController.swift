@@ -30,6 +30,8 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         
         // Download User Location
         let udacityClient = UdacityClient.sharedInstance()
+        
+        // MARK: TO DO - MUST USE ESCAPED FORM
         let param = ["where" : "{\"uniqueKey\":\"\(udacityClient.uniqueKey)\"}"] as [String : AnyObject]
         downloadUserLocation(parameters: param)
     }
