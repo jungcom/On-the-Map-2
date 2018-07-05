@@ -26,9 +26,19 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         // Download 100 Student locations
         
         let parameter = [ParseConstants.ParseParameterKeys.limit: 100] as [String:AnyObject]
-        downloadStudentLocation(parameter: parameter)
+        download100StudentLocations(parameter: parameter)
         
-        
+        // Download User Location
+        let udacityClient = UdacityClient.sharedInstance()
+        let param = ["where" : "{\"uniqueKey\":\"\(udacityClient.uniqueKey)\"}"] as [String : AnyObject]
+        downloadUserLocation(parameters: param)
+    }
+    
+    //Refresh Button
+    @IBAction func refreshData(sender: AnyObject){
+        let parameter = [ParseConstants.ParseParameterKeys.limit: 100] as [String:AnyObject]
+        download100StudentLocations(parameter: parameter)
+        mapView.reloadInputViews()
     }
     
     // Logout using Udacity's DELETE method
@@ -44,29 +54,72 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         }
     }
     
-    
-    func downloadStudentLocation(parameter: [String:AnyObject], withPathExtension:String? = nil){
-        
-        //create parameters and URL
-        
+    // Add Location Button
+    @IBAction func addLocation(sender: AnyObject){
         let parseClient = ParseClient.sharedInstance()
-        let parseURL: URL
-        if let withPathExtension = withPathExtension {
-            parseURL = parseClient.parseURLFromParameters(parameter, withPathExtension: withPathExtension)
+        if parseClient.hasPostedBefore {
+            let alert = UIAlertController(title: "Override?", message: "Would you like to override your current location?", preferredStyle: .alert)
+            let closeAction = UIAlertAction(title: "Close", style: .cancel, handler: nil)
+            let continueAction = UIAlertAction(title: "Continue", style: .default, handler: { (action) in
+                if let mvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InformationPostingViewController") as? InformationPostingViewController {
+                    self.present(mvc, animated: true, completion: nil)
+                }
+            })
+            alert.addAction(closeAction)
+            alert.addAction(continueAction)
+            self.present(alert, animated: true)
+            
         } else {
-            parseURL = parseClient.parseURLFromParameters(parameter)
+            if let mvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InformationPostingViewController") as? InformationPostingViewController {
+                self.present(mvc, animated: true, completion: nil)
+            }
         }
+ 
+    }
+    
+    //download current user location
+    func downloadUserLocation(parameters: [String:AnyObject]){
+        let parseClient = ParseClient.sharedInstance()
+        
+        parseClient.downloadStudentLocations(parameters: parameters, completionHandlerForDownload: { (userLocation, success) in
+            if success{
+                //Use parsed Data
+                guard let recentUserLocation = userLocation![0] as? [String : AnyObject] else {
+                    print("no object for user location found")
+                    return
+                }
+                
+                guard let objectID = recentUserLocation[ParseConstants.ParseResponseKeys.objectID] as? String else {
+                    print("No objectID found")
+                    return
+                }
+                
+                //MARK: TO DO - MUST USE recentUserLocation to save its user data into Udacity Client (make the app useable by other udacity students, not just me)
+                parseClient.objectID = objectID
+                parseClient.hasPostedBefore = true
+                print("objectID found")
+                
+            } else {
+                print("unsuccessful in downloading user location")
+            }
+            })
+
+    }
+    
+    //download 100 student locations
+    func download100StudentLocations(parameter: [String:AnyObject], withPathExtension:String? = nil){
         
         // Create request using parseClient
-        parseClient.downloadStudentLocations(url: parseURL, parameters: parameter, completionHandlerForDownload: {(results, success) in
+        ParseClient.sharedInstance().downloadStudentLocations(parameters: parameter, completionHandlerForDownload: {(results, success) in
             if success {
                 // handle data
                 let studentLocations = StudentInformation.studentLocationsFromResults(results!)
                 
                 // save studentLoactions as a global variable
-                parseClient.sharedStudentLocations = studentLocations
+                ParseClient.sharedInstance().sharedStudentLocations = studentLocations
                 
                 // Place pins on map
+                print("Download Successful")
                 self.placePins(studentLocations)
             } else {
                 print("Download Failed")

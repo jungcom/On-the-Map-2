@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5wn-NI-6SR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -79,7 +79,7 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <textField opaque="NO" alpha="0.45000000000000001" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oAw-wy-HRe">
+                            <textField opaque="NO" alpha="0.45000000000000001" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Location" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oAw-wy-HRe">
                                 <rect key="frame" x="0.0" y="282" width="375" height="100"/>
                                 <color key="backgroundColor" red="0.69853839979999999" green="0.70159318680000005" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
@@ -89,10 +89,20 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <textField opaque="NO" alpha="0.44999998807907104" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Media URL" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P3S-Q0-3Ud">
+                                <rect key="frame" x="0.0" y="416" width="375" height="50"/>
+                                <color key="backgroundColor" red="0.69853839979999999" green="0.70159318680000005" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="1ZD-gK-4Lf"/>
+                                </constraints>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qMK-9I-wNC">
-                                <rect key="frame" x="116" y="493" width="143" height="61"/>
+                                <rect key="frame" x="116" y="520" width="143" height="61"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="0.3631742294520548" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Add"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -110,12 +120,15 @@
                             <constraint firstItem="Abo-Ze-Z3K" firstAttribute="leading" secondItem="P91-Td-zhP" secondAttribute="leading" constant="139" id="DAQ-To-VPW"/>
                             <constraint firstItem="Abo-Ze-Z3K" firstAttribute="top" secondItem="Own-EE-eaf" secondAttribute="bottom" constant="76" id="Faf-tq-vAP"/>
                             <constraint firstItem="oAw-wy-HRe" firstAttribute="top" secondItem="Abo-Ze-Z3K" secondAttribute="bottom" constant="75" id="KdW-cx-wGD"/>
-                            <constraint firstItem="P91-Td-zhP" firstAttribute="bottom" secondItem="qMK-9I-wNC" secondAttribute="bottom" constant="113" id="P6X-Ha-eMY"/>
+                            <constraint firstItem="P3S-Q0-3Ud" firstAttribute="top" secondItem="oAw-wy-HRe" secondAttribute="bottom" constant="34" id="LqM-jV-Rrx"/>
+                            <constraint firstItem="P91-Td-zhP" firstAttribute="bottom" secondItem="qMK-9I-wNC" secondAttribute="bottom" constant="86" id="P6X-Ha-eMY"/>
+                            <constraint firstItem="P3S-Q0-3Ud" firstAttribute="trailing" secondItem="P91-Td-zhP" secondAttribute="trailing" id="Pbo-Pv-TuW"/>
+                            <constraint firstItem="P3S-Q0-3Ud" firstAttribute="leading" secondItem="P91-Td-zhP" secondAttribute="leading" id="TpY-Ro-lcC"/>
                             <constraint firstItem="Abo-Ze-Z3K" firstAttribute="top" secondItem="Own-EE-eaf" secondAttribute="bottom" constant="76" id="YEP-Yo-adA"/>
                             <constraint firstItem="Own-EE-eaf" firstAttribute="leading" secondItem="P91-Td-zhP" secondAttribute="leading" id="Ywc-Ha-kzX"/>
+                            <constraint firstItem="qMK-9I-wNC" firstAttribute="top" secondItem="P3S-Q0-3Ud" secondAttribute="bottom" constant="54" id="aK1-qj-UKv"/>
                             <constraint firstItem="P91-Td-zhP" firstAttribute="trailing" secondItem="Abo-Ze-Z3K" secondAttribute="trailing" constant="139" id="aW2-ri-lV6"/>
                             <constraint firstItem="qMK-9I-wNC" firstAttribute="leading" secondItem="P91-Td-zhP" secondAttribute="leading" constant="116" id="b7c-jn-Qh1"/>
-                            <constraint firstItem="qMK-9I-wNC" firstAttribute="top" secondItem="oAw-wy-HRe" secondAttribute="bottom" constant="111" id="g3U-FE-yBI"/>
                             <constraint firstItem="P91-Td-zhP" firstAttribute="trailing" secondItem="oAw-wy-HRe" secondAttribute="trailing" id="kjY-lT-Xz8"/>
                             <constraint firstItem="Own-EE-eaf" firstAttribute="top" secondItem="P91-Td-zhP" secondAttribute="top" id="pEA-J1-ynj"/>
                             <constraint firstItem="oAw-wy-HRe" firstAttribute="leading" secondItem="P91-Td-zhP" secondAttribute="leading" id="ubn-Uf-xSE"/>
@@ -127,6 +140,7 @@
                         <outlet property="addLocationButton" destination="qMK-9I-wNC" id="r0g-r7-Dns"/>
                         <outlet property="cancelButton" destination="V4V-Mm-8gJ" id="61p-5g-hae"/>
                         <outlet property="locationTextField" destination="oAw-wy-HRe" id="gcn-rT-dfw"/>
+                        <outlet property="mediaURLTextField" destination="P3S-Q0-3Ud" id="8Oo-fg-55c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g03-uj-BD6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -319,7 +333,11 @@
                                     <segue destination="XoG-A0-SIW" kind="presentation" id="TAL-mV-Eg1"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem systemItem="refresh" id="5jg-Vq-vH2"/>
+                            <barButtonItem systemItem="refresh" id="5jg-Vq-vH2">
+                                <connections>
+                                    <action selector="refreshWithSender:" destination="zHq-Le-2xi" id="svr-jl-lk3"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
@@ -400,10 +418,14 @@
                         <rightBarButtonItems>
                             <barButtonItem systemItem="add" id="acW-NC-ZbR">
                                 <connections>
-                                    <segue destination="XoG-A0-SIW" kind="presentation" id="0zZ-zr-7z9"/>
+                                    <action selector="addLocationWithSender:" destination="1d9-oh-78K" id="PmN-ox-TT9"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem systemItem="refresh" id="dWO-wo-rXT"/>
+                            <barButtonItem systemItem="refresh" id="dWO-wo-rXT">
+                                <connections>
+                                    <action selector="refreshDataWithSender:" destination="1d9-oh-78K" id="hT7-6n-A7l"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -424,7 +446,4 @@
         <image name="icon_world" width="52" height="67"/>
         <image name="logo-u" width="62" height="62"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="TAL-mV-Eg1"/>
-    </inferredMetricsTieBreakers>
 </document>

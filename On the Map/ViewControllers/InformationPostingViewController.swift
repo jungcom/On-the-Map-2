@@ -14,6 +14,7 @@ class InformationPostingViewController: UIViewController {
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     
     @IBOutlet weak var locationTextField: UITextField!
+    @IBOutlet weak var mediaURLTextField: UITextField!
     
     @IBOutlet weak var addLocationButton: UIButton!
     
@@ -37,9 +38,7 @@ class InformationPostingViewController: UIViewController {
                     // If posting a new location was successful
                     if success {
                         print("posting data successful")
-                        performUIUpdatesOnMain {
-                            self.dismiss(animated: true, completion: nil)
-                        }
+                        self.dismiss(animated: true, completion: nil)
                     } else {
                         print("Adding Location failed")
                     }
@@ -56,7 +55,7 @@ class InformationPostingViewController: UIViewController {
         findLatLong(location: self.locationTextField.text!, completionHandlerForDownloadingLatLong: { (coordinates, success) in
             if success{
                 let client = UdacityClient.sharedInstance()
-                let user = StudentInformation(firstname: ParseConstants.UserInfo.firstName, lastName: ParseConstants.UserInfo.lastname, mapString: self.locationTextField.text!, mediaURL: ParseConstants.UserInfo.mediaURL, latitude: coordinates[0], longitude: coordinates[1], uniqueKey: client.uniqueKey)
+                let user = StudentInformation(firstname: ParseConstants.UserInfo.firstName, lastName: ParseConstants.UserInfo.lastname, mapString: self.locationTextField.text!, mediaURL: self.mediaURLTextField.text!, latitude: coordinates[0], longitude: coordinates[1], uniqueKey: client.uniqueKey)
                 completionHandler(user, true)
             } else {
                 print("latitude and longitude not successfully downloaded")

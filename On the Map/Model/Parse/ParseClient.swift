@@ -20,9 +20,15 @@ class ParseClient :NSObject{
     // shared STUDENT LOCATION data
     var sharedStudentLocations: [StudentInformation]?
     
+    // shared user objectID
+    var objectID: String? = nil
+    
+    // shared var whether the user has already posted a location or not
+    var hasPostedBefore: Bool = false
+    
     // Download Student Location with get method
     
-    func downloadStudentLocations(url: URL, parameters: [String:AnyObject], completionHandlerForDownload: @escaping (_ results: [[String:AnyObject]]?, _ success: Bool) -> Void){
+    func downloadStudentLocations(parameters: [String:AnyObject], completionHandlerForDownload: @escaping (_ results: [[String:AnyObject]]?, _ success: Bool) -> Void){
         
         //create Parse client and request
         let client = ParseClient.sharedInstance()
@@ -48,7 +54,7 @@ class ParseClient :NSObject{
                 return
             }
             
-            /* 5. Parse the data*/
+            /* MARK: - TO DO: USE COMPLETION HANDLER FOR PARSING DATA */
             let parsedResult: [String:AnyObject]!
             do {
                 parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:AnyObject]
@@ -97,8 +103,19 @@ class ParseClient :NSObject{
             }
             
             // MARK: - TO DO parse data and save object id
-            
-            completionHandlerForPostingLocation(true)
+            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: { (result, error) in
+                if error == nil {
+                    guard let objectId = result![ParseConstants.ParseResponseKeys.objectID] as! String? else{
+                        print("empty objectID")
+                        return
+                    }
+                    
+                    self.objectID = objectId
+                    completionHandlerForPostingLocation(true)
+                } else {
+                    print("Data conversion failed")
+                }
+                })
         }
         task.resume()
     }

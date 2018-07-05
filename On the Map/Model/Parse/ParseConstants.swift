@@ -34,7 +34,7 @@ struct ParseConstants{
     
     //Parse Methods
     struct ParseMethods{
-        static let getStudentLocationMethod = "https://parse.udacity.com/parse/classes/StudentLocation?"
+        static let getStudentLocationMethod = "https://parse.udacity.com/parse/classes/StudentLocation"
     }
     
     //Parse Parameter Keys

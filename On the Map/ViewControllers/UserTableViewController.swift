@@ -28,6 +28,13 @@ class UserTableViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        studentLocations = ParseClient.sharedInstance().sharedStudentLocations
+        tableView.reloadData()
+    }
+    
+    //MARK: TO DO - Has not been correctly implemented (Should Download 100 Student Locations) Refresh button
+    @IBAction func refresh(sender:AnyObject){
+        studentLocations = ParseClient.sharedInstance().sharedStudentLocations
         tableView.reloadData()
     }
     
