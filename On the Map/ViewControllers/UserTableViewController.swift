@@ -28,14 +28,40 @@ class UserTableViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        //refresh data
         studentLocations = ParseClient.sharedInstance().sharedStudentLocations
         tableView.reloadData()
     }
     
-    //MARK: TO DO - Has not been correctly implemented (Should Download 100 Student Locations) Refresh button
+    // Refresh button
     @IBAction func refresh(sender:AnyObject){
-        studentLocations = ParseClient.sharedInstance().sharedStudentLocations
+        // Download 100 Student locations
+        
+        let parameter = [ParseConstants.ParseParameterKeys.limit: 100] as [String:AnyObject]
+        download100StudentLocations(parameter: parameter)
+        
+        self.studentLocations = ParseClient.sharedInstance().sharedStudentLocations
         tableView.reloadData()
+    }
+    
+    //download Student Locations
+    func download100StudentLocations(parameter: [String:AnyObject], withPathExtension:String? = nil){
+        
+        // Create request using parseClient
+        ParseClient.sharedInstance().downloadStudentLocations(parameters: parameter, completionHandlerForDownload: {(results, success) in
+            if success {
+                // handle data
+                let studentLocations = StudentInformation.studentLocationsFromResults(results!)
+                
+                // save studentLoactions as a global variable
+                ParseClient.sharedInstance().sharedStudentLocations = studentLocations
+                
+                print("Download Successful")
+            } else {
+                print("Download Failed")
+            }
+        })
     }
     
     //Logout

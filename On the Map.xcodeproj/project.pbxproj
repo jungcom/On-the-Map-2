@@ -21,7 +21,6 @@
 		4E3C071320E2D121006A5376 /* UserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3C071220E2D121006A5376 /* UserTableViewController.swift */; };
 		4E3C071520E2D3E7006A5376 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3C071420E2D3E7006A5376 /* MapViewController.swift */; };
 		4E40A50520E40670001E586D /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E40A50420E40670001E586D /* StudentInformation.swift */; };
-		4E4A844D20E56E0C00C41C04 /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4A844C20E56E0C00C41C04 /* ParseConvenience.swift */; };
 		4E7BE38120E47B5600F5E2C9 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7BE38020E47B5600F5E2C9 /* ParseClient.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +41,6 @@
 		4E3C071220E2D121006A5376 /* UserTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewController.swift; sourceTree = "<group>"; };
 		4E3C071420E2D3E7006A5376 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		4E40A50420E40670001E586D /* StudentInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
-		4E4A844C20E56E0C00C41C04 /* ParseConvenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
 		4E7BE38020E47B5600F5E2C9 /* ParseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,7 +108,6 @@
 			isa = PBXGroup;
 			children = (
 				4E3166E420E1637A007F2E85 /* ParseConstants.swift */,
-				4E4A844C20E56E0C00C41C04 /* ParseConvenience.swift */,
 				4E7BE38020E47B5600F5E2C9 /* ParseClient.swift */,
 				4E40A50420E40670001E586D /* StudentInformation.swift */,
 			);
@@ -200,7 +197,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E4A844D20E56E0C00C41C04 /* ParseConvenience.swift in Sources */,
 				4E02F20220DD90670017977C /* LoginViewController.swift in Sources */,
 				4E3166EB20E17A2B007F2E85 /* WebViewController.swift in Sources */,
 				4E02F20020DD90670017977C /* AppDelegate.swift in Sources */,

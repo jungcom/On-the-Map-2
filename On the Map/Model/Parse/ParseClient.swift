@@ -54,22 +54,21 @@ class ParseClient :NSObject{
                 return
             }
             
-            /* MARK: - TO DO: USE COMPLETION HANDLER FOR PARSING DATA */
-            let parsedResult: [String:AnyObject]!
-            do {
-                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:AnyObject]
-            } catch {
-                print("Could not parse the data as JSON: '\(data)'")
-                return
-            }
+            /* Parse Json Data */
+            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: { (parsedResult, error) in
+                if error == nil{
+                    guard let results = parsedResult![ParseConstants.ParseResponseKeys.results] as? [[String: AnyObject]] else {
+                        sendError("cannot parse results")
+                        return
+                    }
+                     
+                    completionHandlerForDownload(results, true)
+                    
+                } else {
+                    sendError("Convertion JSON failed")
+                }
+            })
             
-            guard let results = parsedResult[ParseConstants.ParseResponseKeys.results] as? [[String: AnyObject]] else {
-                sendError("cannot parse results")
-                print(parsedResult)
-                return
-            }
-            
-            completionHandlerForDownload(results, true)
         }
         task.resume()
     }

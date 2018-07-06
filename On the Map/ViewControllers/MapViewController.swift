@@ -32,8 +32,17 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         let udacityClient = UdacityClient.sharedInstance()
         
         // MARK: TO DO - MUST USE ESCAPED FORM
+        
         let param = ["where" : "{\"uniqueKey\":\"\(udacityClient.uniqueKey)\"}"] as [String : AnyObject]
         downloadUserLocation(parameters: param)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //refresh data
+        let parameter = [ParseConstants.ParseParameterKeys.limit: 100] as [String:AnyObject]
+        download100StudentLocations(parameter: parameter)
     }
     
     //Refresh Button
@@ -188,14 +197,5 @@ class MapViewController: UIViewController, MKMapViewDelegate{
             }
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
