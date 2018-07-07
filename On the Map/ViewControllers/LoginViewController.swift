@@ -48,7 +48,6 @@ class LoginViewController: UIViewController {
             cannotLoginTextLabel.text = "Username or Password Empty."
         } else {
             setUIEnabled(false)
-            
             authenticate()
             
         }
@@ -57,10 +56,13 @@ class LoginViewController: UIViewController {
     func authenticate(){
         let userEmail = userEmailTextField.text!
         let userPassword = userPasswordTextField.text!
+        let sv = UIViewController.displaySpinner(onView: self.view)
         UdacityClient.sharedInstance().authenticateUser(userEmail: userEmail, userPassword: userPassword, completionHandlerForAuthenticating: { ( success, error) in
+            UIViewController.removeSpinner(spinner: sv)
             if success{
                 self.completeLogin()
             } else {
+                
                 performUIUpdatesOnMain {
                     self.cannotLoginTextLabel.text = error
                     self.setUIEnabled(true)

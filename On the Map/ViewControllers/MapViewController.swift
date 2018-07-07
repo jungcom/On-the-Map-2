@@ -125,7 +125,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     
     //download 100 student locations
     func download100StudentLocations(parameter: [String:AnyObject], withPathExtension:String? = nil){
-        
+        let sv = UIViewController.displaySpinner(onView: self.view)
         // Create request using parseClient
         ParseClient.sharedInstance().downloadStudentLocations(parameters: parameter, completionHandlerForDownload: {(results, success) in
             if success {
@@ -138,6 +138,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
                 // Place pins on map
                 print("Download Successful")
                 self.placePins(studentLocations)
+                UIViewController.removeSpinner(spinner: sv)
             } else {
                 print("Download Failed")
             }

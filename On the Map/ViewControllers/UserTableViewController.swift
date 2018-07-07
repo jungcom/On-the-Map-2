@@ -47,7 +47,7 @@ class UserTableViewController: UITableViewController {
     
     //download Student Locations
     func download100StudentLocations(parameter: [String:AnyObject], withPathExtension:String? = nil){
-        
+        let sv = UIViewController.displaySpinner(onView: self.view)
         // Create request using parseClient
         ParseClient.sharedInstance().downloadStudentLocations(parameters: parameter, completionHandlerForDownload: {(results, success) in
             if success {
@@ -56,7 +56,7 @@ class UserTableViewController: UITableViewController {
                 
                 // save studentLoactions as a global variable
                 ParseClient.sharedInstance().sharedStudentLocations = studentLocations
-                
+                UIViewController.removeSpinner(spinner: sv)
                 print("Download Successful")
             } else {
                 print("Download Failed")
