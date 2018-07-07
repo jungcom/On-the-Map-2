@@ -30,7 +30,9 @@ class InformationPostingViewController: UIViewController {
     
     // POST a location to Parse API
     @IBAction func addLocationButton(sender:AnyObject){
+        let sv = UIViewController.displaySpinner(onView: self.view)
         self.createUserLocationObject{(user, success) in
+            UIViewController.removeSpinner(spinner: sv)
             // If creating user location object was successful
             if success {
                 // If User has posted before, use the update method
@@ -54,6 +56,7 @@ class InformationPostingViewController: UIViewController {
                     print("puting data successful")
                     self.dismiss(animated: true, completion: nil)
                 } else {
+                    self.alertFailure()
                     print("Updating User Location failed")
                 }
             })
@@ -66,6 +69,7 @@ class InformationPostingViewController: UIViewController {
                 print("posting data successful")
                 self.dismiss(animated: true, completion: nil)
             } else {
+                self.alertFailure()
                 print("Adding New Location failed")
             }
         })
@@ -79,11 +83,19 @@ class InformationPostingViewController: UIViewController {
                 let user = StudentInformation(firstname: ParseConstants.UserInfo.firstName, lastName: ParseConstants.UserInfo.lastname, mapString: self.locationTextField.text!, mediaURL: self.mediaURLTextField.text!, latitude: coordinates[0], longitude: coordinates[1], uniqueKey: client.uniqueKey)
                 completionHandler(user, true)
             } else {
-                print("latitude and longitude not successfully downloaded")
+                print("latitude and longitude not  downloaded")
             }
             
         })
         
+    }
+    
+    // alert User that Adding Failed
+    func alertFailure(){
+        let alert = UIAlertController(title: "Failed to Add", message: "Adding your location has failed. Please try again", preferredStyle: .alert)
+        let closeAction = UIAlertAction(title: "Close", style: .cancel, handler: nil)
+        alert.addAction(closeAction)
+        self.present(alert, animated: true)
     }
     
     // Find the latitude and longitude of a given location String

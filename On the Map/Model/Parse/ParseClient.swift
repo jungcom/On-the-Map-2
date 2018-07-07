@@ -88,6 +88,7 @@ class ParseClient :NSObject{
             //Print error method
             func sendError(_ error: String) {
                 print(error)
+                completionHandlerForPostingLocation(false)
             }
             
             /* GUARD: Was there an error? */
@@ -104,7 +105,7 @@ class ParseClient :NSObject{
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: { (result, error) in
                 if error == nil {
                     guard let objectId = result![ParseConstants.ParseResponseKeys.objectID] as! String? else{
-                        print("empty objectID")
+                        sendError("empty objectID")
                         return
                     }
                     
@@ -112,7 +113,7 @@ class ParseClient :NSObject{
                     self.hasPostedBefore = true
                     completionHandlerForPostingLocation(true)
                 } else {
-                    print("Data conversion failed")
+                    sendError("Data conversion failed")
                 }
                 })
         }
@@ -135,6 +136,7 @@ class ParseClient :NSObject{
             //Print error method
             func sendError(_ error: String) {
                 print(error)
+                completionHandlerForUpdating(false)
             }
             
             /* GUARD: Was there an error? */
