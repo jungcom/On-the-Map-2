@@ -28,7 +28,7 @@ class InformationPostingViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: TODO - DEPENDING ON WHETHER THE USER HAS POSTED OR NOT, IT WILL EITHER POST NEW LOCATION OR DUPDATE LOCATION
+    // MARK: TODO - DEPENDING ON WHETHER THE USER HAS POSTED OR NOT, IT WILL EITHER POST NEW LOCATION OR UPDATE LOCATION
     // Post a location to Parse API
     @IBAction func addLocationButton(sender:AnyObject){
         self.createUserLocationObject{(user, success) in

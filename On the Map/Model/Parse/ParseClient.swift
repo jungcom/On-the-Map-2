@@ -59,6 +59,7 @@ class ParseClient :NSObject{
                 if error == nil{
                     guard let results = parsedResult![ParseConstants.ParseResponseKeys.results] as? [[String: AnyObject]] else {
                         sendError("cannot parse results")
+                        print(parsedResult)
                         return
                     }
                      

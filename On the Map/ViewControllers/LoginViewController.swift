@@ -40,6 +40,7 @@ class LoginViewController: UIViewController {
         //set textfields empty
         userEmailTextField.text = ""
         userPasswordTextField.text = ""
+        cannotLoginTextLabel.text = ""
     }
 
     @IBAction func loginPressed(){
@@ -48,83 +49,29 @@ class LoginViewController: UIViewController {
         } else {
             setUIEnabled(false)
             
-            let userEmail = userEmailTextField.text!
-            let userPassword = userPasswordTextField.text!
-            authenticateUser(userEmail: userEmail, userPassword: userPassword)
+            authenticate()
+            
         }
     }
     
-    @IBAction func signUpPressed(){
-        let controller = storyboard!.instantiateViewController(withIdentifier: "WebViewController") 
-        present(controller, animated: true, completion: nil)
-    }
-    
-    @objc func cancelSignUp() {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    //MARK: TO DO - THIS MUST BE DONE IN UDACITY CLIENT
-    func authenticateUser(userEmail: String, userPassword: String){
-        var request = URLRequest(url: URL(string: UdacityConstants.UdacityMethod.authenticateMethod)!)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "{\"udacity\": {\"username\": \"\(userEmail)\", \"password\": \"\(userPassword)\"}}".data(using: .utf8)
-        let session = URLSession.shared
-        let task = session.dataTask(with: request) { data, response, error in
-            //Print error method
-            func sendError(_ error: String) {
-                print(error)
+    func authenticate(){
+        let userEmail = userEmailTextField.text!
+        let userPassword = userPasswordTextField.text!
+        UdacityClient.sharedInstance().authenticateUser(userEmail: userEmail, userPassword: userPassword, completionHandlerForAuthenticating: { ( success, error) in
+            if success{
+                self.completeLogin()
+            } else {
                 performUIUpdatesOnMain {
                     self.cannotLoginTextLabel.text = error
                     self.setUIEnabled(true)
                 }
             }
-            
-            /* GUARD: Was there an error? */
-            guard (error == nil) else {
-                sendError("There was an error with your request: \(error!)")
-                return
-            }
-            
-            /* GUARD: Was there any data returned? */
-            guard let data = data else {
-                sendError("No data was returned by the request!")
-                return
-            }
-            let range = Range(5..<data.count)
-            let newData = data.subdata(in: range) /* subset response data! */
-            
-            /* 5. Parse the data*/
-            let parsedResult: [String:AnyObject]!
-            do {
-                parsedResult = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as! [String:AnyObject]
-            } catch {
-                print("Could not parse the data as JSON: '\(newData)'")
-                return
-            }
-            
-            if let _ = parsedResult[UdacityConstants.UdacityResponseKeys.StatusCode] as? Int {
-                sendError(UdacityConstants.UdacityErrors.noUsernameOrPassword)
-                return
-            }
-            
-            guard let account = parsedResult[UdacityConstants.UdacityResponseKeys.Account] as? [String: AnyObject], let session = parsedResult[UdacityConstants.UdacityResponseKeys.Session] as? [String: AnyObject] else {
-                sendError(UdacityConstants.UdacityErrors.noUsernameOrPassword)
-                return
-            }
-            
-            guard let sessionID = session[UdacityConstants.UdacityResponseKeys.SessionID] as? String, let uniqueKey = account[UdacityConstants.UdacityResponseKeys.Key] as? String else {
-                sendError(UdacityConstants.UdacityErrors.noUsernameOrPassword)
-                return
-            }
-            
-            print("SessionID: " + sessionID)
-            print ("Unique Key : " + uniqueKey)
-            UdacityClient.sharedInstance().uniqueKey = uniqueKey
-            self.completeLogin()
-        }
-        task.resume()
+        })
+    }
+    
+    @IBAction func signUpPressed(){
+        let controller = storyboard!.instantiateViewController(withIdentifier: "WebViewController") 
+        present(controller, animated: true, completion: nil)
     }
     
     // function to complete login and open Movietab controller
