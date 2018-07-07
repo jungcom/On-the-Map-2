@@ -104,9 +104,16 @@ class MapViewController: UIViewController, MKMapViewDelegate{
                     return
                 }
                 
+                guard let firstName = recentUserLocation[ParseConstants.ParseResponseKeys.firstName] as? String, let lastName = recentUserLocation[ParseConstants.ParseResponseKeys.lastName] as? String else {
+                    print("No name found")
+                    return
+                }
+                
                 //MARK: TO DO - MUST USE recentUserLocation to save its user data into Udacity Client (make the app useable by other udacity students, not just me)
                 parseClient.objectID = objectID
                 parseClient.hasPostedBefore = true
+                ParseConstants.UserInfo.firstName = firstName
+                ParseConstants.UserInfo.lastname = lastName
                 print("objectID found")
                 
             } else {

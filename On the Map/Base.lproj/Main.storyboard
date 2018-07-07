@@ -330,7 +330,7 @@
                         <rightBarButtonItems>
                             <barButtonItem systemItem="add" id="9dG-tm-yq5">
                                 <connections>
-                                    <segue destination="XoG-A0-SIW" kind="presentation" id="TAL-mV-Eg1"/>
+                                    <action selector="addLocationWithSender:" destination="zHq-Le-2xi" id="4je-AO-dUq"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem systemItem="refresh" id="5jg-Vq-vH2">

@@ -64,6 +64,29 @@ class UserTableViewController: UITableViewController {
         })
     }
     
+    // Add Location Button
+    @IBAction func addLocation(sender: AnyObject){
+        let parseClient = ParseClient.sharedInstance()
+        if parseClient.hasPostedBefore {
+            let alert = UIAlertController(title: "Override?", message: "Would you like to override your current location?", preferredStyle: .alert)
+            let closeAction = UIAlertAction(title: "Close", style: .cancel, handler: nil)
+            let continueAction = UIAlertAction(title: "Continue", style: .default, handler: { (action) in
+                if let mvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InformationPostingViewController") as? InformationPostingViewController {
+                    self.present(mvc, animated: true, completion: nil)
+                }
+            })
+            alert.addAction(closeAction)
+            alert.addAction(continueAction)
+            self.present(alert, animated: true)
+            
+        } else {
+            if let mvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InformationPostingViewController") as? InformationPostingViewController {
+                self.present(mvc, animated: true, completion: nil)
+            }
+        }
+        
+    }
+    
     //Logout
     @IBAction func logout(sender: AnyObject){
         UdacityClient.sharedInstance().logout{ (success) in

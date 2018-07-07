@@ -17,7 +17,7 @@ class ParseClient :NSObject{
     // authentication state
     var sessionID: String? = nil
     
-    // shared STUDENT LOCATION data
+    // shared STUDENT LOCATIONs data
     var sharedStudentLocations: [StudentInformation]?
     
     // shared user objectID
@@ -26,7 +26,7 @@ class ParseClient :NSObject{
     // shared var whether the user has already posted a location or not
     var hasPostedBefore: Bool = false
     
-    // Download Student Location with get method
+    // Download Student Locations with get method
     
     func downloadStudentLocations(parameters: [String:AnyObject], completionHandlerForDownload: @escaping (_ results: [[String:AnyObject]]?, _ success: Bool) -> Void){
         
@@ -74,7 +74,7 @@ class ParseClient :NSObject{
         task.resume()
     }
     
-    // MARK: - Post User's Location
+    // MARK: - Post New User's Location
     func postNewUserLocation(userLocationInfo: StudentInformation, completionHandlerForPostingLocation: @escaping (_ success: Bool) -> Void){
         var request = URLRequest(url: URL(string: ParseConstants.ParseMethods.getStudentLocationMethod)!)
         request.httpMethod = "POST"
@@ -109,11 +109,47 @@ class ParseClient :NSObject{
                     }
                     
                     self.objectID = objectId
+                    self.hasPostedBefore = true
                     completionHandlerForPostingLocation(true)
                 } else {
                     print("Data conversion failed")
                 }
                 })
+        }
+        task.resume()
+    }
+    
+    // Update User Loaction with PUT HTTP Method
+    func updateUserLocation(userLocationInfo: StudentInformation, completionHandlerForUpdating: @escaping (_ success:Bool)-> Void){
+        
+        print("objectID: \(self.objectID ?? "null")")
+        var request = URLRequest(url: URL(string: (ParseConstants.ParseMethods.getStudentLocationMethod + "/\(self.objectID ?? "" )"))!)
+        request.httpMethod = "PUT"
+        request.addValue(ParseConstants.ParseParameterKeys.parseAppID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(ParseConstants.ParseParameterKeys.restAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = "{\"uniqueKey\": \"\(userLocationInfo.uniqueKey ?? "")\", \"firstName\": \"\(userLocationInfo.firstName)\", \"lastName\": \"\(userLocationInfo.lastName)\",\"mapString\": \"\(userLocationInfo.mapString)\", \"mediaURL\": \"\(userLocationInfo.mediaURL)\",\"latitude\": \(userLocationInfo.latitude), \"longitude\": \(userLocationInfo.longitude)}".data(using: .utf8)
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { data, response, error in
+            
+            //Print error method
+            func sendError(_ error: String) {
+                print(error)
+            }
+            
+            /* GUARD: Was there an error? */
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error!)")
+                return
+            }
+            
+            /* GUARD: Was there any data returned? */
+            guard let data = data else {
+                sendError("No data was returned by the request!")
+                return
+            }
+            print(String(data: data, encoding: .utf8)!)
+            completionHandlerForUpdating(true)
         }
         task.resume()
     }

@@ -49,8 +49,7 @@ struct ParseConstants{
     
     //Parse User Info
     struct UserInfo{
-        static let firstName = "Anthony"
-        static let lastname = "Lee"
-        static let mediaURL = "https://google.com"
+        static var firstName = "Anthony"
+        static var lastname = "Lee"
     }
 }

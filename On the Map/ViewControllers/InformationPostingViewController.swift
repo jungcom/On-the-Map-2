@@ -28,27 +28,47 @@ class InformationPostingViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: TODO - DEPENDING ON WHETHER THE USER HAS POSTED OR NOT, IT WILL EITHER POST NEW LOCATION OR UPDATE LOCATION
-    // Post a location to Parse API
+    // POST a location to Parse API
     @IBAction func addLocationButton(sender:AnyObject){
         self.createUserLocationObject{(user, success) in
             // If creating user location object was successful
             if success {
-               //Post user Location
-                ParseClient.sharedInstance().postNewUserLocation(userLocationInfo: user, completionHandlerForPostingLocation:{ (success) in
-                    // If posting a new location was successful
-                    if success {
-                        print("posting data successful")
-                        self.dismiss(animated: true, completion: nil)
-                    } else {
-                        print("Adding New Location failed")
-                    }
-                })
+                // If User has posted before, use the update method
+                if ParseClient.sharedInstance().hasPostedBefore{
+                    self.putCurrentUserLocation(user)
+                } else {
+                    //Post New User Location
+                    self.postNewUserLocation(user)
+                }
             } else {
                 print("User Location Object creation failed")
             }
         }
         
+    }
+    
+    //PUT Current User Location (Update)
+    func putCurrentUserLocation(_ userInfo:StudentInformation){
+        ParseClient.sharedInstance().updateUserLocation(userLocationInfo: userInfo, completionHandlerForUpdating: { (success) in
+                if success{
+                    print("puting data successful")
+                    self.dismiss(animated: true, completion: nil)
+                } else {
+                    print("Updating User Location failed")
+                }
+            })
+    }
+    //Post New User Location
+    func postNewUserLocation(_ userInfo:StudentInformation){
+        ParseClient.sharedInstance().postNewUserLocation(userLocationInfo: userInfo, completionHandlerForPostingLocation:{ (success) in
+            // If posting a new location was successful
+            if success {
+                print("posting data successful")
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                print("Adding New Location failed")
+            }
+        })
     }
     
     // Create a StudentInformation Object
